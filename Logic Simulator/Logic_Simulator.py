@@ -68,6 +68,8 @@ transistorSet = set()
 wireSet = set()
 
 
+
+
 class Block: #base class of all block objects
     def __init__(self, boxx, boxy):
         pass
@@ -270,8 +272,6 @@ def main():
     lastCameraX = 0
     lastCameraY = 0
 
-
-
     selectedBlockType = 1
 
     leftMouseDown = False
@@ -279,6 +279,8 @@ def main():
     rightMouseDown = False
 
     firstMoveMiddle = True #set false after inital move with middle mouse down
+
+    blocksEdited = False
 
     movementTotalX = 0
     movementTotalY = 0
@@ -421,19 +423,26 @@ def main():
             elif event.type == MOUSEBUTTONUP:
                 if event.button == 1:
                     leftMouseDown = False
+                    if blocksEdited:
+                        print('do wirepath edit')
+                        blocksEdited = False
                 elif event.button == 2:
                     middleMouse = False
                     firstMoveMiddle = True
                 elif event.button == 3:
                     rightMouseDown = False
-
+                    if blocksEdited:
+                        print('do wirepath edit')
+                        blocksEdited = False
 
         if boxx != None and boxy != None:
             # The mouse is currently over a box.
             if leftMouseDown and rightMouseDown == False: #prevents event if both buttons pressed
                 setBlock(boxx, boxy)
+                blocksEdited = True
             elif rightMouseDown and leftMouseDown == False:
-                deleteBlock(boxx, boxy)
+                deleteBlock(boxx, boxy)            
+                blocksEdited = True
 
         #TRANSISTOR AND WIRE LOGIC PROCESSING HERE
         elapsedTime += FPSCLOCK.get_time()
