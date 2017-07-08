@@ -1,0 +1,52 @@
+-required varibales and containers
+
+Current wirepath ID (starts at 0, increment for each new path added to wirepath dictionary)
+Current Edit Count integer
+
+Edit count for each wire
+Wirepath IDs for each wire, assigned within each wire object one per wire
+Wirepath IDs for each transistor, up to 3, assigned within each transistor object
+
+A dictionary of wirepaths, each entries key is a Wirepath ID, each entries value is a set of wire locations(world coords)
+	(Each wire path cannot contain wires from other paths)
+
+
+
+-How to map all wire paths...
+
+Loop through transistors in transistor set:.....
+	....for current transistor in the loop.....
+		get all connected wires, regardless of edits
+		check if each connected wire has been edited this edit: 
+			if any have, add their wirePathID to the current transistor (this will catch wirepaths that are connected to the outputs of more than one transistor)
+			if any haven't, add there location to the transistor-wire-search-queue
+			while transistor-wire-search-queue is not empty:
+				currentTransistorOutputWire = transistor-wire-search-queue.pop
+				if currentTransistorOutputWire.editCount < currentEditCount: (then this wire has not been edited this edit, else go to next output wire,...
+				...this will check to see if a wirepath is connected to 2 or more outputs of the same transistor, meaning the ID for this path will already be in the current transistor)
+					add currentTransistorOutputWire to wire-search-queue
+					while wire-search-queue is not empty...
+						currentWire = wire-search-queue.pop
+						get all connected and unedited-this-edit wires and add to wire-search-queue
+						increment the currentWires edit count by one
+						assign Current wirepathID to currentWire
+						assign current wire location to wirepath dictionary for current wirepath ID
+					When wire-path-search-queue is empty path is complete... assign current wirepath ID to current transistor(to allow transistor to Turn ON/OFF wire path during operation)
+					incremement Current wirepath ID by 1
+increment edit count by 1 when finished entire board
+
+
+
+
+
+-How to check is a wire has been edited this edit
+	Compare wires edit-count to current edit count, if less than current edit count then it needs to be added to seach queue
+
+
+-When an edit happens
+
+On mouse up.. (edit finished, i.e do not map for each single block added wait for edit to finish)
+	Erase all wirepaths in wirepath dictionary
+	loop through wireSet and set all processedThisEdit(Tick) to False... Better still change this to an integer of EditCount and check on each edit if the number is less than current edit number
+		... Will save on this loop.
+	Map(Re-map) all wire paths
