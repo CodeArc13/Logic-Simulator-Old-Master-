@@ -4,6 +4,7 @@ from Globals import CameraBlocksX, CameraBlocksY, leftTopCoordsOfBox
 from Const import TOTALBOXSIZE, TRANSISTORBLOCKOFF, TRANSISTORBLOCKON, ON, OFF
 from Sto import mainDict, WSet
 
+
 class TransistorBlock(Block):
     def __init__(self, type, boxx, boxy, inputSideX, inputSideY, outputSideX1, outputSideY1, outputSideX2, outputSideY2, outputSideX3, outputSideY3):  #screen coords
         self.boxx, self.boxy = (boxx + CameraBlocksX.getX(), boxy + CameraBlocksY.getY()) #world coords, screen coords. screen converted to world

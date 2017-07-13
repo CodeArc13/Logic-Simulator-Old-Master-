@@ -1,18 +1,12 @@
 from Const import BOXSIZE, GAPSIZE, XMARGIN, YMARGIN
 
+
 class SelectedBlockType(object):
     type = 1 #default is wire blocks
     def setType(type):
         SelectedBlockType.type = type
     def getType():
         return SelectedBlockType.type
-
-#class Tick(object):
-#    tick = 0 #for determining if a wirePath has been turned on in current tick   
-#    def incTick():
-#        Tick.tick += 1
-#    def getTick():
-#        return Tick.tick
 
 class EditCounter():
     editCount = 0 #number of edits so far, in entire program session

@@ -1,6 +1,6 @@
 from Const import OFF, ON
 from Sto import mainDict
-#from Globals import Tick
+
 
 class WirePath(object):
     currentWirePathID = 0 #current wirePathID being mapped in an edit

@@ -26,6 +26,12 @@
     <Compile Include="Block.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="BlockEditDefs.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BlockMoveDefs.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Const.py">
       <SubType>Code</SubType>
     </Compile>

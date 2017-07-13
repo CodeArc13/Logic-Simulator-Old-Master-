@@ -4,6 +4,7 @@ from Globals import CameraBlocksX, CameraBlocksY, EditCounter, leftTopCoordsOfBo
 from Const import TOTALBOXSIZE, WIREBLOCKOFF, WIREBLOCKON, RIGHTSIDEX, LEFTSIDEX, UPSIDEY, DOWNSIDEY, OFF
 from Sto import mainDict, WSet
 
+
 class WireBlock(Block):
     wireBlockDeleted = False
     def __init__(self, boxx, boxy): #screen coords

@@ -1,6 +1,7 @@
 import pygame
 from Const import WINDOWWIDTH, WINDOWHEIGHT
 
+
 DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
 
 def drawRect(block, locAndSize):
