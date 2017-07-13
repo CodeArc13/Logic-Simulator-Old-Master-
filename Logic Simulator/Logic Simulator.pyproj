@@ -11,6 +11,8 @@
     <OutputPath>.</OutputPath>
     <Name>Logic Simulator</Name>
     <RootNamespace>Logic Simulator</RootNamespace>
+    <InterpreterId>
+    </InterpreterId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,7 +23,31 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Block.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Const.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Display.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Globals.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Logic_Simulator.py" />
+    <Compile Include="Sto.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TransistorBlock.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WireBlock.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="WirePath.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="CircuitPathAlgorithm.txt" />

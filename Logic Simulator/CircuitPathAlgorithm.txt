@@ -4,10 +4,10 @@ Current wirepath ID (starts at 0, increment for each new path added to wirepath 
 Current Edit Count integer
 
 Edit count for each wire
-Wirepath IDs for each wire, assigned within each wire object one per wire
-Wirepath IDs for each transistor, up to 3, assigned within each transistor object
+Wirepath ID for each wire, assigned within each wire object one per wire
+Wirepath IDs for each transistor, up to 3, assigned within each transistor object, list or set
 
-A dictionary of wirepaths, each entries key is a Wirepath ID, each entries value is a set of wire locations(world coords)
+A dictionary of wirepaths, each entry's key is a Wirepath ID, each entries value is a set of wire locations(world coords)
 	(Each wire path cannot contain wires from other paths)
 
 
@@ -16,7 +16,7 @@ A dictionary of wirepaths, each entries key is a Wirepath ID, each entries value
 
 Loop through transistors in transistor set:.....
 	....for current transistor in the loop.....
-		get all connected wires, regardless of edits
+		get all wires connected to transistor, regardless of edits
 		check if each connected wire has been edited this edit: 
 			if any have, add their wirePathID to the current transistor (this will catch wirepaths that are connected to the outputs of more than one transistor)
 			if any haven't, add there location to the transistor-wire-search-queue
@@ -28,9 +28,9 @@ Loop through transistors in transistor set:.....
 					while wire-search-queue is not empty...
 						currentWire = wire-search-queue.pop
 						get all connected and unedited-this-edit wires and add to wire-search-queue
-						increment the currentWires edit count by one
+						increment the currentWires edit count by one(set to current editcount)
 						assign Current wirepathID to currentWire
-						assign current wire location to wirepath dictionary for current wirepath ID
+						assign Current wire location to wirepath dictionary for current wirepath ID
 					When wire-path-search-queue is empty path is complete... assign current wirepath ID to current transistor(to allow transistor to Turn ON/OFF wire path during operation)
 					incremement Current wirepath ID by 1
 increment edit count by 1 when finished entire board
@@ -39,7 +39,7 @@ increment edit count by 1 when finished entire board
 
 
 
--How to check is a wire has been edited this edit
+-How to check if a wire has been edited this edit
 	Compare wires edit-count to current edit count, if less than current edit count then it needs to be added to seach queue
 
 
