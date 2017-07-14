@@ -1,18 +1,18 @@
 FPS = 60 # frames per second, the general speed of the program
 WINDOWWIDTH = 1000 # size of window's width in pixels
 WINDOWHEIGHT = 1000 # size of windows' height in pixels
-BOXSIZE = 15 # size of box height & width in pixels
-GAPSIZE = 2 # size of gap between boxes in pixels
-TOTALBOXSIZE = BOXSIZE + GAPSIZE
-BOARDWIDTH = 50 # number of columns of blocks
-BOARDHEIGHT = 50 # number of rows of blocks
+BOXSIZE = 10 # size of box height & width in pixels
+#GAPSIZE = 2 # size of gap between boxes in pixels
+TOTALBOXSIZE = BOXSIZE
+BOARDWIDTH = 75 # number of columns of blocks
+BOARDHEIGHT = 75 # number of rows of blocks
 BOARDHEIGHTPIX = BOARDHEIGHT * TOTALBOXSIZE
 BOARDWIDTHPIX = BOARDWIDTH * TOTALBOXSIZE 
-XMARGIN = int((WINDOWWIDTH - (BOARDWIDTH * (BOXSIZE + GAPSIZE))) / 2)
-YMARGIN = int((WINDOWHEIGHT - (BOARDHEIGHT * (BOXSIZE + GAPSIZE))) / 2)
+XMARGIN = int((WINDOWWIDTH - (BOARDWIDTH * BOXSIZE)) / 2)
+YMARGIN = int((WINDOWHEIGHT - (BOARDHEIGHT * BOXSIZE)) / 2)
 
-GRIDBACKGROUND = (XMARGIN - GAPSIZE, YMARGIN - GAPSIZE, (BOARDWIDTH * (BOXSIZE + GAPSIZE)) + GAPSIZE, (BOARDHEIGHT * (BOXSIZE + GAPSIZE)) + GAPSIZE)
-
+#GRIDBACKGROUND = (XMARGIN - GAPSIZE, YMARGIN - GAPSIZE, (BOARDWIDTH * (BOXSIZE + GAPSIZE)) + GAPSIZE, (BOARDHEIGHT * (BOXSIZE + GAPSIZE)) + GAPSIZE)
+GRIDBACKGROUND = (XMARGIN - 2, YMARGIN - 2, (BOARDWIDTH * BOXSIZE) + 3, (BOARDHEIGHT * BOXSIZE) + 3)
 #            R    G    B
 BLACK    = (  0,   0,   0)
 GRAY     = (100, 100, 100)

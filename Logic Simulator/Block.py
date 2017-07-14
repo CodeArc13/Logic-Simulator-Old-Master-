@@ -10,5 +10,3 @@ class Block(object): #base class of all block objects (abstract class of a sort)
 
     def output(self, queryingBlockX, queryingBlockY): #gives querying block the current state
         pass
-
-

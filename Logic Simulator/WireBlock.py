@@ -14,16 +14,16 @@ class WireBlock(Block):
         self.inputBlockR = (RIGHTSIDEX + self.boxx, self.boxy) #world coords
         self.inputBlockU = (self.boxx, UPSIDEY + self.boxy) #world coords
         self.inputBlockD = (self.boxx, DOWNSIDEY + self.boxy) #world coords
-        self.blockLocSize = (self.left - 1, self.top - 1, TOTALBOXSIZE, TOTALBOXSIZE) #screen coords
+        self.blockLocSize = (self.left, self.top, TOTALBOXSIZE, TOTALBOXSIZE) #screen coords
         self.onScreen = True
         self.processedThisTick = False
         self.state = OFF
         self.editCount = -1
         self.wirePathID = None #must be set in edit
         self.drawBlock()
-    
     def setWireBlockDeleted(deleted):
-        WireBlock.wireBlockDeleted = deleted
+        WireBlock.wireBlockDeleted = deleted      
+        
 
     def getWireBlockDeleted():
         return WireBlock.wireBlockDeleted     
@@ -67,7 +67,7 @@ class WireBlock(Block):
     def repositionOnScreen(self): #screen coords
         if self.onScreen:
             self.left, self.top = leftTopCoordsOfBox(self.boxx - CameraBlocksX.getX(), self.boxy - CameraBlocksY.getY())  #screen coords, world coords. world converted to screen
-            self.blockLocSize = (self.left - 1, self.top - 1, TOTALBOXSIZE, TOTALBOXSIZE) #screen coords
+            self.blockLocSize = (self.left, self.top, TOTALBOXSIZE, TOTALBOXSIZE) #screen coords
             self.drawBlock()      
             
     def drawBlock(self): #cull (do not draw) blocks outside camera view

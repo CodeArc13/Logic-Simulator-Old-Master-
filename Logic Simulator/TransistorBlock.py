@@ -13,7 +13,7 @@ class TransistorBlock(Block):
         self.outputBlock1 = (outputSideX1 + self.boxx, outputSideY1 + self.boxy) #world coords
         self.outputBlock2 = (outputSideX2 + self.boxx, outputSideY2 + self.boxy) #world coords
         self.outputBlock3 = (outputSideX3 + self.boxx, outputSideY3 + self.boxy) #world coords
-        self.blockLocSize = (self.left - 1, self.top - 1, TOTALBOXSIZE, TOTALBOXSIZE) #screen coords
+        self.blockLocSize = (self.left, self.top, TOTALBOXSIZE, TOTALBOXSIZE) #screen coords
         self.onScreen = True #set to false if block is outside camera view
         self.previousState = None
         self.state = OFF
@@ -35,7 +35,7 @@ class TransistorBlock(Block):
                 if self.onScreen:
                     self.drawBlock(TRANSISTORBLOCKON)
                 self.previousState = ON
-
+                
     def clearWirePathIDs(self):
         self.wirePathIDs.clear()
 
@@ -61,7 +61,8 @@ class TransistorBlock(Block):
     def repositionOnScreen(self): #screen coords
         if self.onScreen:
             self.left, self.top = leftTopCoordsOfBox(self.boxx - CameraBlocksX.getX(), self.boxy - CameraBlocksY.getY())  #screen coords, world coords. world converted to screen
-            self.blockLocSize = (self.left - 1, self.top - 1, TOTALBOXSIZE, TOTALBOXSIZE) #screen coords
+            #self.blockLocSize = (self.left - 1, self.top - 1, TOTALBOXSIZE, TOTALBOXSIZE) #screen coords
+            self.blockLocSize = (self.left, self.top, TOTALBOXSIZE, TOTALBOXSIZE) #screen coords
             if self.state: # == True:
                 self.drawBlock(TRANSISTORBLOCKON)
             else:

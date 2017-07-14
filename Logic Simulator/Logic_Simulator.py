@@ -25,7 +25,7 @@ def main():
     totalRight = 0
     totalUp = 0
     totalDown = 0
-
+    
     pygame.init()
 
     FPSCLOCK = pygame.time.Clock()
@@ -42,9 +42,10 @@ def main():
   
     pygame.display.set_caption('Logic Simulator')
 
-    drawRect(BGCOLOR, GRIDBACKGROUND)
+    #drawRect(BGCOLOR, GRIDBACKGROUND)
+    drawBorder()
     
-    drawEmptyBoard()
+    #drawEmptyBoard()
 
     while True: # main game loop    
         for event in pygame.event.get(): # event handling loop
@@ -144,13 +145,13 @@ def main():
                     firstMoveMiddle = True
                 elif event.button == 3: #delete block
                     rightMouseDown = False
-
+                    
         if boxx != None and boxy != None:
             # The mouse is currently over a box.
             if leftMouseDown and rightMouseDown == False: #prevents event if both buttons pressed
                 setBlock(boxx, boxy)
             elif rightMouseDown and leftMouseDown == False:
-                deleteBlock(boxx, boxy)               
+                deleteBlock(boxx, boxy)
 
         #TRANSISTOR AND WIRE LOGIC PROCESSING HERE
         elapsedTime += FPSCLOCK.get_time()
@@ -203,7 +204,7 @@ def main():
         drawRect(BLACK, (0, 0, 78, 36)) #remove last blitted FPS
         textSurfaceObj = fontObj.render('%.2f' % FPSCLOCK.get_fps(), True, YELLOW)
         blitToSurf(textSurfaceObj, textRectObj)
-
+        
 
 def getBoxAtPixel(x, y): #screen coords
     #print 'in get box'
@@ -223,8 +224,7 @@ def drawEmptyBoard():
             #WSet.add((boxx, boxy))
             #mainDict[boxx, boxy] = WireBlock(boxx, boxy)
             drawRect(EMPTYBLOCK, (left, top, BOXSIZE, BOXSIZE)) #screen coords
-        
-
+            
 #def drawBoard(dict):
 #    for boxx in xrange(BOARDWIDTH):
 #        for boxy in xrange(BOARDHEIGHT):

@@ -61,7 +61,7 @@ def deleteBlock(boxx, boxy): #screen coords
             WSet.remove((worldX, worldY))  
         del mainDict[worldX, worldY]
         left, top = leftTopCoordsOfBox(boxx, boxy) #screen coords
-        drawRect(EMPTYBLOCKBORDER, (left - 1, top - 1, TOTALBOXSIZE, TOTALBOXSIZE)) #clears yellow edge left from transistor, prevents haveing to redraw background
+        #drawRect(EMPTYBLOCKBORDER, (left - 1, top - 1, TOTALBOXSIZE, TOTALBOXSIZE)) #clears yellow edge left from transistor, prevents haveing to redraw background
         drawRect(EMPTYBLOCK, (left, top, BOXSIZE, BOXSIZE))
         mapWirePaths() #wirePathMapping def here
 

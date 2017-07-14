@@ -28,8 +28,8 @@ def clearDrawArea(): #only clear filled blocks not empty blocks, should be quick
             
 
 def clearBlock(loc): #helper def for clearDrawArea to compact repeating code
-    drawRect(EMPTYBLOCKBORDER, loc) #clears yellow edge left from transistor, prevents haveing to redraw background
-    drawRect(EMPTYBLOCK, (loc[0] + 1, loc[1] + 1, BOXSIZE, BOXSIZE)) #screen coords
+    #drawRect(EMPTYBLOCKBORDER, loc) #clears yellow edge left from transistor, prevents haveing to redraw background
+    drawRect(EMPTYBLOCK, (loc[0], loc[1], BOXSIZE, BOXSIZE)) #screen coords
 
 
 def moveBlocks():

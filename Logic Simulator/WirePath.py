@@ -10,13 +10,14 @@ class WirePath(object):
         self.state = OFF
         self.wirePathID = ID
         self.connectedTransistors = set() #number of connected transistors (only connected by outputs and not more than one entry per transistor i.e a set)
-
+        
     def incrementCurrentWirePathID():
-        WirePath.currentWirePathID +=1
+        WirePath.currentWirePathID += 1
+        
 
     def resetWirePathID():
         WirePath.currentWirePathID = 0
-
+        
     def addToPath(self, wireLoc):
         self.pathSet.add(wireLoc)
 
