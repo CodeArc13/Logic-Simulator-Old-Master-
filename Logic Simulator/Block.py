@@ -2,6 +2,9 @@ class Block(object): #base class of all block objects (abstract class of a sort)
     def __init__(self, boxx, boxy):
         pass
 
+    def getLocation(self):
+        pass
+
     def repositionOnScreen(self): #screen coords
         pass
 

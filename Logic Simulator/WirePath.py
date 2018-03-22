@@ -1,4 +1,4 @@
-from Const import OFF, ON
+from Consts import OFF, ON
 from Sto import mainDict
 
 
@@ -14,7 +14,6 @@ class WirePath(object):
     def incrementCurrentWirePathID():
         WirePath.currentWirePathID += 1
         
-
     def resetWirePathID():
         WirePath.currentWirePathID = 0
         

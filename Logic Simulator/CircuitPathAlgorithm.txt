@@ -40,7 +40,7 @@ increment edit count by 1 when finished entire board
 
 
 -How to check if a wire has been edited this edit
-	Compare wires edit-count to current edit count, if less than current edit count then it needs to be added to seach queue
+	Compare wires edit-count to current edit count, if less than current edit count then it needs to be added to search queue
 
 
 -When an edit happens

@@ -31,7 +31,7 @@
     <Compile Include="BlockMoveDefs.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Const.py">
+    <Compile Include="Consts.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Display.py">

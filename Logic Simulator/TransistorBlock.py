@@ -1,19 +1,19 @@
 from Block import *
 from Display import drawRect
-from Globals import CameraBlocksX, CameraBlocksY, leftTopCoordsOfBox
-from Const import TOTALBOXSIZE, TRANSISTORBLOCKOFF, TRANSISTORBLOCKON, ON, OFF
+from Globals import CameraBlocksX, CameraBlocksY, BoxSize, leftTopCoordsOfBox
+from Consts import TRANSISTORBLOCKOFF, TRANSISTORBLOCKON, ON, OFF
 from Sto import mainDict, WSet
 
 
 class TransistorBlock(Block):
     def __init__(self, type, boxx, boxy, inputSideX, inputSideY, outputSideX1, outputSideY1, outputSideX2, outputSideY2, outputSideX3, outputSideY3):  #screen coords
-        self.boxx, self.boxy = (boxx + CameraBlocksX.getX(), boxy + CameraBlocksY.getY()) #world coords, screen coords. screen converted to world
+        self.boxx, self.boxy = (boxx + CameraBlocksX.get(), boxy + CameraBlocksY.get()) #world coords, screen coords. screen converted to world
         self.left, self.top = leftTopCoordsOfBox(boxx, boxy)  #screen coords
         self.inputBlock = (inputSideX + self.boxx, inputSideY + self.boxy) #world coords
         self.outputBlock1 = (outputSideX1 + self.boxx, outputSideY1 + self.boxy) #world coords
         self.outputBlock2 = (outputSideX2 + self.boxx, outputSideY2 + self.boxy) #world coords
         self.outputBlock3 = (outputSideX3 + self.boxx, outputSideY3 + self.boxy) #world coords
-        self.blockLocSize = (self.left, self.top, TOTALBOXSIZE, TOTALBOXSIZE) #screen coords
+        self.blockLocSize = (self.left, self.top, BoxSize.get(), BoxSize.get()) #screen coords
         self.onScreen = True #set to false if block is outside camera view
         self.previousState = None
         self.state = OFF
@@ -56,13 +56,16 @@ class TransistorBlock(Block):
         return self.connectedWireList
 
     def getState(self):
-        return self.state   
+        return self.state  
+    
+    def getLocation(self):
+        return (self.boxx, self.boxy)
 
     def repositionOnScreen(self): #screen coords
         if self.onScreen:
-            self.left, self.top = leftTopCoordsOfBox(self.boxx - CameraBlocksX.getX(), self.boxy - CameraBlocksY.getY())  #screen coords, world coords. world converted to screen
-            #self.blockLocSize = (self.left - 1, self.top - 1, TOTALBOXSIZE, TOTALBOXSIZE) #screen coords
-            self.blockLocSize = (self.left, self.top, TOTALBOXSIZE, TOTALBOXSIZE) #screen coords
+            self.left, self.top = leftTopCoordsOfBox(self.boxx - CameraBlocksX.get(), self.boxy - CameraBlocksY.get())  #screen coords, world coords. world converted to screen
+            #self.blockLocSize = (self.left - 1, self.top - 1, TOTALBoxSize.get(), TOTALBoxSize.get()) #screen coords
+            self.blockLocSize = (self.left, self.top, BoxSize.get(), BoxSize.get()) #screen coords
             if self.state: # == True:
                 self.drawBlock(TRANSISTORBLOCKON)
             else:

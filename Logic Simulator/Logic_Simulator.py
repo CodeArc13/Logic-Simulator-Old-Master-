@@ -1,12 +1,12 @@
 import pygame, sys
 from pygame.locals import *
-from Const import *
+from Consts import *
 from Sto import *
 from Display import *
-from Globals import CameraBlocksX, CameraBlocksY, SelectedBlockType, leftTopCoordsOfBox
+from Globals import CameraBlocksX, CameraBlocksY, SelectedBlockType, BoxSize, BoardHeight, BoardWidth, leftTopCoordsOfBox, getBoxAtPixel
 from WireBlock import WireBlock
 from BlockEditDefs import setBlock, deleteBlock, mapWirePaths
-from BlockMoveDefs import clearDrawArea, moveBlocks
+from BlockMoveDefs import clearDrawArea, moveBlocks, zoomIn, zoomOut, zoomBlocks
 
          
 def main():
@@ -45,7 +45,7 @@ def main():
     #drawRect(BGCOLOR, GRIDBACKGROUND)
     drawBorder()
     
-    #drawEmptyBoard()
+    #drawFullBoardTest()
 
     while True: # main game loop    
         for event in pygame.event.get(): # event handling loop
@@ -54,20 +54,23 @@ def main():
                 sys.exit()
             elif event.type == KEYUP:
                 if event.key == K_1:
-                    SelectedBlockType.setType(1)
+                    SelectedBlockType.set(1)
                     print ('selected wire blocks')
                 elif event.key == K_2:
-                    SelectedBlockType.setType(2)
+                    SelectedBlockType.set(2)
                     print ('selected left transistor blocks')
                 elif event.key == K_3:
-                    SelectedBlockType.setType(3)
+                    SelectedBlockType.set(3)
                     print ('selected right transistor blocks')
                 elif event.key == K_4:
-                    SelectedBlockType.setType(4)
+                    SelectedBlockType.set(4)
                     print ('selected up transistor blocks')
                 elif event.key == K_5:
-                    SelectedBlockType.setType(5)
+                    SelectedBlockType.set(5)
                     print ('selected down transistor blocks')
+                elif event.key == K_6:
+                    pass
+                    #print(getCtrBlockWorldCoords())                   
             elif event.type == MOUSEMOTION:
                 if leftMouseDown ^ rightMouseDown: #(Xor)prevents motion with none or both buttons pressed from triggering events
                     mousex, mousey = event.pos
@@ -89,27 +92,27 @@ def main():
                     if relativePosition[1] > 0:
                         totalDown += abs(relativePosition[1])
                         totalUp = 0
-                    if totalLeft >= TOTALBOXSIZE:
-                        #cameraPixX += TOTALBOXSIZE
-                        CameraBlocksX.incX()
+                    if totalLeft >= BoxSize.get():
+                        #CameraBlocksX.setPix(CameraBlocksX.get() + totalLeft)
+                        CameraBlocksX.inc()
                         totalLeft = 0
                         clearDrawArea()
                         moveBlocks()
-                    elif totalRight >= TOTALBOXSIZE:
-                        #cameraPixX -= TOTALBOXSIZE
-                        CameraBlocksX.decX()
+                    elif totalRight >= BoxSize.get():
+                        #CameraBlocksX.setPix(CameraBlocksX.get() - totalRight)
+                        CameraBlocksX.dec()
                         totalRight = 0
                         clearDrawArea()
                         moveBlocks()
-                    if totalUp >= TOTALBOXSIZE:
-                        #cameraPixY += TOTALBOXSIZE
-                        CameraBlocksY.incY()
+                    if totalUp >= BoxSize.get():
+                        #CameraBlocksY.setPix(CameraBlocksY.get() + totalUp)
+                        CameraBlocksY.inc()
                         totalUp = 0
                         clearDrawArea()
                         moveBlocks()
-                    elif totalDown >= TOTALBOXSIZE:
-                        #cameraPixY -= TOTALBOXSIZE
-                        CameraBlocksY.decY()
+                    elif totalDown >= BoxSize.get():
+                        #CameraBlocksY.setPix(CameraBlocksY.get() - totalDown)
+                        CameraBlocksY.dec()
                         totalDown = 0
                         clearDrawArea()
                         moveBlocks()
@@ -134,9 +137,13 @@ def main():
                     boxx, boxy = getBoxAtPixel(mousex, mousey)
                     rightMouseDown = True
                 elif event.button == 4:
-                    print('mouse wheel up')
+                    clearDrawArea()
+                    zoomIn()
+                    zoomBlocks()
                 elif event.button == 5:
-                    print('mouse wheel down')
+                    clearDrawArea()
+                    zoomOut()
+                    zoomBlocks()
             elif event.type == MOUSEBUTTONUP:
                 if event.button == 1: #add block
                     leftMouseDown = False
@@ -201,50 +208,47 @@ def main():
             pygame.display.update()
         
         FPSCLOCK.tick(FPS)
-        drawRect(BLACK, (0, 0, 78, 36)) #remove last blitted FPS
+        drawFPSRect(BLACK, (0, 0, 78, 36)) #remove last blitted FPS
         textSurfaceObj = fontObj.render('%.2f' % FPSCLOCK.get_fps(), True, YELLOW)
         blitToSurf(textSurfaceObj, textRectObj)
         
 
-def getBoxAtPixel(x, y): #screen coords
-    #print 'in get box'
-    for boxx in range(BOARDWIDTH):
-        for boxy in range(BOARDHEIGHT):
-            left, top = leftTopCoordsOfBox(boxx, boxy)  #screen coords
-            boxRect = pygame.Rect(left, top, BOXSIZE, BOXSIZE)  #screen coords
-            if boxRect.collidepoint(x, y):  #screen coords
-                return (boxx, boxy) #screen coords
-    return (None, None)
-
-
-def drawEmptyBoard():
-    for boxx in range(BOARDWIDTH): #screen coords
-        for boxy in range(BOARDHEIGHT): #screen coords
+def drawFullBoardTest(): #for testing performance only
+    for boxx in range(BoardWidth.get()): #screen coords
+        for boxy in range(BoardHeight.get()): #screen coords
+            #boxx, boxy = 0, 0
             left, top = leftTopCoordsOfBox(boxx, boxy) #screen coords
-            #WSet.add((boxx, boxy))
-            #mainDict[boxx, boxy] = WireBlock(boxx, boxy)
-            drawRect(EMPTYBLOCK, (left, top, BOXSIZE, BOXSIZE)) #screen coords
+            WSet.add((boxx, boxy))
+            mainDict[boxx, boxy] = WireBlock(boxx, boxy)
+            drawRect(WIREBLOCKOFF, (left, top, BoxSize.get(), BoxSize.get())) #screen coords
+boxx, boxy = int(BoardWidth.get()/2), int((BoardHeight.get()-(TOPBAR / BoxSize.get()))/2)
+print((boxx, boxy))
+left, top = leftTopCoordsOfBox(boxx, boxy) #screen coords
+WSet.add((boxx, boxy))
+mainDict[boxx, boxy] = WireBlock(boxx, boxy)
+mapWirePaths()
+drawRect(WIREBLOCKOFF, (left, top, BoxSize.get(), BoxSize.get())) #screen coords
             
 #def drawBoard(dict):
-#    for boxx in xrange(BOARDWIDTH):
-#        for boxy in xrange(BOARDHEIGHT):
+#    for boxx in xrange(BoardWidth.get()):
+#        for boxy in xrange(BoardHeight.get()):
 #            left, top = leftTopCoordsOfBox(boxx, boxy)
 #            if type(board[boxx + 1, boxy + 1]) is EmptyBlock:
-#                pygame.draw.rect(DISPLAYSURF, RED, (left - 1, top - 1, BOXSIZE + 2, BOXSIZE + 2), 1) #clears yellow edge left from transistor, prevents haveing to redraw background
-#                pygame.draw.rect(DISPLAYSURF, EMPTYBLOCK, (left, top, BOXSIZE, BOXSIZE))
+#                pygame.draw.rect(DISPLAYSURF, RED, (left - 1, top - 1, BoxSize.get() + 2, BoxSize.get() + 2), 1) #clears yellow edge left from transistor, prevents haveing to redraw background
+#                pygame.draw.rect(DISPLAYSURF, EMPTYBLOCK, (left, top, BoxSize.get(), BoxSize.get()))
 #            elif type(board[boxx + 1, boxy + 1]) is WireBlock:
-#                pygame.draw.rect(DISPLAYSURF, WIREBLOCK, (left - 1, top - 1, BOXSIZE + 2, BOXSIZE + 2))
+#                pygame.draw.rect(DISPLAYSURF, WIREBLOCK, (left - 1, top - 1, BoxSize.get() + 2, BoxSize.get() + 2))
 #            elif type(board[boxx + 1, boxy + 1]) is TransistorBlock:
-#                pygame.draw.rect(DISPLAYSURF, TRANSISTORBLOCK, (left - 1, top - 1, BOXSIZE + 2, BOXSIZE + 2))
+#                pygame.draw.rect(DISPLAYSURF, TRANSISTORBLOCK, (left - 1, top - 1, BoxSize.get() + 2, BoxSize.get() + 2))
 
 #def drawIcon(shape, color, boxx, boxy):
-#    quarter = int(BOXSIZE * 0.25) # syntactic sugar
-#    half =    int(BOXSIZE * 0.5)  # syntactic sugar
+#    quarter = int(BoxSize.get() * 0.25) # syntactic sugar
+#    half =    int(BoxSize.get() * 0.5)  # syntactic sugar
 
 #    left, top = leftTopCoordsOfBox(boxx, boxy) # get pixel coords from board coords
 #    # Draw the shapes
 #    if shape == SQUARE:
-#        pygame.draw.rect(DISPLAYSURF, color, (left + quarter, top + quarter, BOXSIZE - half, BOXSIZE - half)) ##use for drawing wires and transistors
+#        pygame.draw.rect(DISPLAYSURF, color, (left + quarter, top + quarter, BoxSize.get() - half, BoxSize.get() - half)) ##use for drawing wires and transistors
 
 if __name__ == '__main__':
     main()
