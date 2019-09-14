@@ -1,0 +1,47 @@
+integer block codes
+
+ 0 = empty block	OFF 
+
+ 1 = Wire block		OFF	unscanned (Scanned/unscanned would mean having to change the displayed/processed array in the twin array model where as only the editing array should be edited)
+ 2 = Wire block		OFF scanned
+ 3 = Wire block		ON	unscanned
+ 4 = Wire block		ON	scanned
+
+ 3 = Tran left in	OFF
+ 4 = Tran left in	ON
+
+ 5 = Tran right in	OFF
+ 6 = Tran right in	ON
+
+ 7 = Tran up in		OFF
+ 8 = Tran up in		ON
+
+ 9 = Tran down in	OFF
+10 = Tran down in	ON
+
+11 = Tran top in	OFF
+12 = Tran top in	ON
+
+13 = Tran bottom in OFF
+14 = Tran bottom in ON
+
+Data Structures
+
+Use 2 numpy Arrays to store a processed state and an editing state, similar to Conway's Game Of Life, once the edited array is finiahed it
+the two arrays switch roles.
+These 2 structures should be all that is required for processing the states, and will only ever contain integer values
+
+
+Algorithm
+
+Use each array on each other to calculate the next state then display the blocks currently being viewed by the camera
+
+To calculate if a block is on the screen simply perform a check using the camera as an origin point, this wil be done
+on every state calculation, then the block will be written to the screen surface and displayed on pygame update.
+A simple Z axis check 
+
+Editing
+
+Editing should be real time and handled in the same way as before
+N.B It would be easier to prevent realtime edits for the PyCUDA version.
+
