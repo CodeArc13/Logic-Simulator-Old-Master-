@@ -57,6 +57,7 @@
   <ItemGroup>
     <Content Include="CircuitPathAlgorithm.txt" />
     <Content Include="new processing algorithm and data structure.txt" />
+    <Content Include="README.txt" />
   </ItemGroup>
   <ItemGroup>
     <InterpreterReference Include="Global|PythonCore|3.7" />
