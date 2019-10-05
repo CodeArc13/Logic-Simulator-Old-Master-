@@ -11,7 +11,7 @@ from BlockMoveDefs import clearDrawArea, moveBlocks, zoomIn, zoomOut, zoomBlocks
 
          
 def main():
-    PROCESSRATE = 100 #process cycles at a set rate in milliseconds
+    PROCESSRATE = 1 #process cycles at a set rate in milliseconds
     elapsedTime = 0 #ammount of time in milliseconds since last procress cycle
 
     leftMouseDown = False
@@ -205,8 +205,10 @@ def main():
         #    doDraws = False
         #Redraw the screen and wait a clock tick.
 
-        if WireBlock.getWireBlockDeleted() == False:#if wireBlockdeleted is true do not increment tick this tick or update display           
+        if WireBlock.getWireBlockDeleted() == False:#if wireBlockdeleted is true do not increment tick this tick or update display               
+            #drawBoard() #new draw function for combined rects
             pygame.display.update()
+            #pygame.display.flip()
         
         FPSCLOCK.tick(FPS)
         drawFPSRect(BLACK, (0, 0, 78, 36)) #remove last blitted FPS
@@ -222,13 +224,15 @@ def drawFullBoardTest(): #for testing performance only
             WSet.add((boxx, boxy))
             mainDict[boxx, boxy] = WireBlock(boxx, boxy)
             drawRect(WIREBLOCKOFF, (left, top, BoxSize.get(), BoxSize.get())) #screen coords
-boxx, boxy = int(BoardWidth.get()/2), int((BoardHeight.get()-(TOPBAR / BoxSize.get()))/2)
-print((boxx, boxy))
-left, top = leftTopCoordsOfBox(boxx, boxy) #screen coords
-WSet.add((boxx, boxy))
-mainDict[boxx, boxy] = WireBlock(boxx, boxy)
-mapWirePaths()
-drawRect(WIREBLOCKOFF, (left, top, BoxSize.get(), BoxSize.get())) #screen coords
+
+
+#boxx, boxy = int(BoardWidth.get()/2), int((BoardHeight.get()-(TOPBAR / BoxSize.get()))/2)
+#print((boxx, boxy))
+#left, top = leftTopCoordsOfBox(boxx, boxy) #screen coords
+#WSet.add((boxx, boxy))
+#mainDict[boxx, boxy] = WireBlock(boxx, boxy)
+#mapWirePaths()
+#drawRect(WIREBLOCKOFF, (left, top, BoxSize.get(), BoxSize.get())) #screen coords
             
 #def drawBoard(dict):
 #    for boxx in xrange(BoardWidth.get()):

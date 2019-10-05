@@ -1,7 +1,7 @@
 #Global Constants
 FPS = 60 # frames per second, the general speed of the program
-WINDOWWIDTH = 1000 # size of window's width in pixels
-WINDOWHEIGHT = 1050 # size of windows' height in pixels
+WINDOWWIDTH = 2000 # size of window's width in pixels
+WINDOWHEIGHT = 1300 # size of windows' height in pixels
 TOPBAR = 50
 #BOARDHEIGHTPIX = BoardHeight.get() * BoxSize.get()
 #BOARDWIDTHPIX = BoardWidth.get() * BoxSize.get() 

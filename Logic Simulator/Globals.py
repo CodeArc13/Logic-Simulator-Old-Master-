@@ -103,17 +103,54 @@ def leftTopCoordsOfBox(boxx, boxy):  #screen coords
     top = boxy * BoxSize.get() + Ymargin.get()  #screen coords
     return (left, top)  #screen coords 
 
-def getBoxAtPixel(x, y): #screen coords
-    #print 'in get box'
-    for boxx in range(BoardWidth.get()):
-        for boxy in range(BoardHeight.get()):
-            left, top = leftTopCoordsOfBox(boxx, boxy)  #screen coords
-            boxRect = pygame.Rect(left, top, BoxSize.get(), BoxSize.get()) #screen coords
-            if boxRect.collidepoint(x, y):  #screen coords
-                return (boxx, boxy) #screen coords
+#Linear search
+#def getBoxAtPixel(x, y): #screen coords
+#    #print 'in get box'
+#    for boxx in range(BoardWidth.get()):
+#        for boxy in range(BoardHeight.get()):
+#            left, top = leftTopCoordsOfBox(boxx, boxy)  #screen coords
+#            boxRect = pygame.Rect(left, top, BoxSize.get(), BoxSize.get()) #screen coords
+#            if boxRect.collidepoint(x, y):  #screen coords
+#                return (boxx, boxy) #screen coords
+#    return (None, None)
+
+#Binary search #using lines
+def getBoxAtPixel(x, y): #mouse coords in pixels
+
+    rowS = 0                    #Row start
+    rowE = BoardHeight.get()    #Row end
+
+    while rowS <= rowE:
+
+        rowMid = int(rowS + (rowE - rowS) / 2)
+        left, top = leftTopCoordsOfBox(0, rowMid)
+        boxRect = pygame.Rect(left, top, BoxSize.get() * BoardWidth.get(), BoxSize.get()) #screen coords
+        if boxRect.collidepoint(x, y):  #screen coords
+
+            colS = 0                    #Col start
+            colE = BoardWidth.get()     #Col end
+
+            while colS <= colE:
+            #if mouse is somewhere in this row bin search it
+                
+                colMid = int(colS + (colE - colS) / 2)
+                left, top = leftTopCoordsOfBox(colMid, rowMid)
+                boxRect = pygame.Rect(left, top, BoxSize.get(), BoxSize.get()) #screen coords
+                if boxRect.collidepoint(x, y):  #screen coords
+                    return colMid, rowMid
+
+                elif left < x:
+                    colS = colMid + 1
+                else:
+                    colE = colMid - 1
+
+
+        elif top < y:
+            rowS = rowMid + 1
+        else:
+            rowE = rowMid - 1
+
     return (None, None)
-
-
 
 
 #XMARGIN = int((WINDOWWIDTH - (BoardWidth.get() * BoxSize.get())) / 2)

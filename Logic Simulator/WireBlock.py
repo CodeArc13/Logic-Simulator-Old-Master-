@@ -25,7 +25,7 @@ class WireBlock(Block):
     def setWireBlockDeleted(deleted):
         WireBlock.wireBlockDeleted = deleted      
         
-    def getWireBlockDeleted():
+    def getWireBlockDeleted(): #static variable
         return WireBlock.wireBlockDeleted     
     
     def returnConnectedUneditedWires(self):
