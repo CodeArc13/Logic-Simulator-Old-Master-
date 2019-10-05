@@ -11,7 +11,7 @@ Mouse wheel zooms
 
 Middle mouse dragging pans the view
 
-Experiment and create cicuits using the wires and transistors to make invertors and inturn gates
+Experiment and create circuits using the wires and transistors to make invertors and inturn gates
 and larger circuits.
 
 No saving yet!
